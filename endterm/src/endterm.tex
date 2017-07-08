@@ -28,14 +28,14 @@ Mentor: Dr. Indranil Saha
 
 	\section{Introduction}
 		\subsection{Motivation}
-		Swarm robotics is a field of multi-robotics in which large number of robots are coordinated in a centralized$^{[1]}$ or distributed$^{[3]}$ way.
+		Swarm robotics is a field of multi-robotics in which large number of identical robots are coordinated in a centralized$^{[1]}$ or distributed$^{[3]}$ way.
 		It is supposed that a desired collective behavior emerges from the interactions between the robots and interactions of robots with the environment.
 		With  recent  technological  developments, producing a large number of inexpensive robots that are  equipped  with  sophisticated  sensing,  computation and communication tools has become a reality$^{[5]}$. 
 		Swarm robots can be used to form various spatial arrangements for any required purpose.
 		\subsection{Objective}
 		Robots need to move simultaneosly, to go from one position to another, to collectively
 		form a new configuration. Describing complex spatial specifications for swarms is a
-		non-trivial task. Our goal is to optimise the cost of the collective motion of the robots
+		non-trivial task. Our goal is to optimise the cost and \textit{total time taken} for the collective motion of the robots
 		from initial configuration to final configuration. We will be doing this with the help
 		of a SAT based tool. We will form boolean constraints that describe the workspace and the
 		motion primitives, and feed it to the SAT solver, whose output will be processed further
@@ -45,12 +45,12 @@ Mentor: Dr. Indranil Saha
 
 
 	\section{Problem Statement}
-		We are give a $n \times n$ grid with $R$ number of robots and $G$ number of obstacles. The initial and final positions of the robots along with the positions of the obstacles are given. Our task is to generate optimal trajectory for all the robots such that it takes minimum time and incurs minimum cost. 
+		Given a $n \times n$ grid with $R$ number of robots and $G$ number of obstacles. The initial and final positions of the robots along with the positions of the obstacles are given. Our task is to generate optimal trajectory for all the robots such that it takes minimum time and incurs minimum cost. 
 	\section{Methodology}
 		We consider a grid $A$ of size $n \times n$.
 		We will refer the collection of all the robots in the grid as \textit{swarm}. 
 		We will have $R$ number of robots such that a robot will occupy a cell of the grid.
-		No two robots can occupy the same cell of the grid, and a robot will occupy only a single cell of the grid.
+		No two robots can occupy the same cell of the grid simultaneously, and a robot will occupy only a single cell of the grid at any time.
 		In a timestep, each robot can either move to an adjacent cell, or may remain in the same cell.
 		We will refer to a \textit{move} as the movement of a robot.
 		A robot can move only to an adjacent cell upon executing a \textit{move}.
@@ -89,7 +89,7 @@ Mentor: Dr. Indranil Saha
 
 	\section{Defining the constraints}
 		%\subsection{boolean variables}
-		The rules for the robots to move have to formulated into boolean expressions. For this we will have to define boolean variables.
+		The rules for the robots to move have to be formulated into boolean expressions. For this we will have to define boolean variables.
 		\subsection{Defining boolean variables:}
 			I define $X(t, k, x, y)$ as a boolean variable s.t. $X(t, k, x, y)$ is \textit{TRUE} iff at time step $t$, the $k$th robot is at position $(x,y)$. The number of boolean variables will be $(L+1) \times R \times n^2$
 		
@@ -175,7 +175,7 @@ Mentor: Dr. Indranil Saha
 			Time complexity for forming these constraints is $O(L \times R \times n^2)$. These constraints are given to Open-WBO, along with the rest of the constraints, while solving for the solution with optimum cost. These constraints are not fed to the MiniSAT while computing the optimum value of \textit{time length}. 
 
 	\section{Implementation}
-		For the implementation we use two SAT solver tools, namely, MiniSAT$^[4]$ and Open-WBO$^[6]$. MiniSat is a minimalistic, open-source SAT solver. Open-WBO is an open source MaxSAT solver initially based on WBO.\\
+		For the implementation we use two SAT solver tools, namely, MiniSAT$^[4]$ and Open-WBO$^[6]$. MiniSat is a minimalistic, open-source SAT solver. Open-WBO is an open source MaxSAT solver initially based on WBO$^{[8]}$.\\
 		First we find the optimum \textit{time length} for the problem using MiniSAT and then we find Open-WBO to find the optimal cost.
 		First we generate the constraints using C++ executables.
 		Then, we transform the constraints into CNF form and feed it as input to the SAT solver.
@@ -232,7 +232,7 @@ Mentor: Dr. Indranil Saha
 			Once we find the minmum value of $L$ for which the constraints are solvable, we need to find the solution with the optimum cost. This is achieved by feeding the Open-WBO MAX-SAT solver with the soft constraints we discussed earlier($4.6$), along with the rest of the constraints. The result thus obtained will be optimised, both in terms of \textit{time length} and cost.
 
 		\subsection{Optimising constraint generation}
-			It must be noticed that while computing the optimal \textit{time length}, in the iterations of $L$ the constraint generation time is substantial as compared to the tool call time. So, in order to improve upon the total time we need to optimise the constraint generation. The idea is to reuse the constraints generated for the smaller values of $L$ in the constraints for the larger values of $L$.\\
+			We have noticed that while computing the optimal \textit{time length}, in the iterations of $L$ the constraint generation time is substantial as compared to the tool call time. So, in order to improve upon the total time we need to optimise the constraint generation. The idea is to reuse the constraints generated for the smaller values of $L$ in the constraints for the larger values of $L$.\\
 
 			What we do is we store the constraints generated for each value of $L$ ,say upto $t$, in a file. When we generate the constraints for $t+1$, we escape the long iterations of generating the constraints for $L=1$ to $L=t$, and instead just catinate them from the stored files.
 
@@ -435,6 +435,12 @@ Mentor: Dr. Indranil Saha
 			\author{Indranil Saha, Rattanachai Ramaithitima, Vijay Kumar}
 			\textit{Automated composition of motion primitives for multi-robot systems from safe LTL specifications}\\
 			\texttt{http://ieeexplore.ieee.org/document/6942758/}
+
+			%item [8]
+			\bibitem{wbo}
+			\author{Vasco Manquinho, Ruben Martins, Inês Lynce, João Marques-Silva, Jordi Planes}
+			\textit{WBO - Weighted Boolean Optimization Solver}\\
+			\texttt{http://sat.inesc-id.pt/wbo/}
 		\end{thebibliography}
 
 \end{document}
