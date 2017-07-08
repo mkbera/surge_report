@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.16)  7 JUL 2017 17:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.2.16)  8 JUL 2017 02:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -80,14 +80,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
 \mathdisplay@stack=\toks18
 LaTeX Info: Redefining \[ on input line 2735.
 LaTeX Info: Redefining \] on input line 2736.
-)
-(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2010/09/12 v5.6 Page Geometry
+) (./caption.sty
+Package: caption 2004/05/16 v3.0b Customising captions (AS)
+\captionmargin=\dimen112
+\captionwidth=\dimen113
+\captionindent=\dimen114
+\captionparindent=\dimen115
+\captionhangindent=\dimen116
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
-)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
@@ -102,30 +109,30 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@cnth=\count99
 \Gm@cntv=\count100
 \c@Gm@tempcnt=\count101
-\Gm@bindingoffset=\dimen112
-\Gm@wd@mp=\dimen113
-\Gm@odd@mp=\dimen114
-\Gm@even@mp=\dimen115
-\Gm@layoutwidth=\dimen116
-\Gm@layoutheight=\dimen117
-\Gm@layouthoffset=\dimen118
-\Gm@layoutvoffset=\dimen119
+\Gm@bindingoffset=\dimen117
+\Gm@wd@mp=\dimen118
+\Gm@odd@mp=\dimen119
+\Gm@even@mp=\dimen120
+\Gm@layoutwidth=\dimen121
+\Gm@layoutheight=\dimen122
+\Gm@layouthoffset=\dimen123
+\Gm@layoutvoffset=\dimen124
 \Gm@dimlist=\toks20
 ) (./endterm.aux)
 \openout1 = `endterm.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -163,13 +170,13 @@ LaTeX Font Info:    ... okay on input line 25.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 109--118
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+Underfull \hbox (badness 10000) in paragraph at lines 114--123
 
  []
 
-[2]
-Overfull \hbox (37.96118pt too wide) detected at line 123
+
+Overfull \hbox (37.96118pt too wide) detected at line 128
 \OML/cmm/m/it/10 X\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t \OT1/cmr/m/n/10 + 1\OML/c
 mm/m/it/10 ; k; x; y\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 ) \OML/cmm/m/it/10 X\OT1
 /cmr/m/n/10 (\OML/cmm/m/it/10 t; k; x; y\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 _ \O
@@ -182,13 +189,166 @@ S/cmsy/m/n/10 _ \OML/cmm/m/it/10 X\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 t; k; x; y
 \OT1/cmr/m/n/10 + 1)
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 159--162
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 185--186
 
  []
 
-[3]
-Overfull \hbox (55.16618pt too wide) in paragraph at lines 189--193
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--196
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--213
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--213
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--213
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+
+ []
+
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
+[]\OT1/cmr/m/n/10 Non-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
+\OT1/cmr/m/n/10 optimised
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 242--242
+[]\OT1/cmr/m/n/10 Optimised
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--259
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--259
+[]\OT1/cmr/m/n/10 Non-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--259
+\OT1/cmr/m/n/10 optimised
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--259
+[]\OT1/cmr/m/n/10 Optimised
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 7832) in paragraph at lines 309--309
+\OT1/cmr/m/n/10 SMT based
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 309--309
+\OT1/cmr/m/n/10 SAT based
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 7832) in paragraph at lines 353--353
+\OT1/cmr/m/n/10 SMT based
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
+\OT1/cmr/m/n/10 SAT based
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+[]\OT1/cmr/m/n/10 Number of
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 7832) in paragraph at lines 373--373
+\OT1/cmr/m/n/10 SMT based
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+[]\OT1/cmr/m/n/10 Timing for
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 373--373
+\OT1/cmr/m/n/10 SAT based
+ []
+
+[8]
+Overfull \hbox (55.16618pt too wide) in paragraph at lines 405--409
 \OT1/cmtt/m/n/10 https://www.seas.harvard.edu/news/2014/08/self-organizing-thou
 sand-robot-swarm 
  []
@@ -203,31 +363,32 @@ Missing character: There is no Â in font cmr10!
 Missing character: There is no ¶ in font cmr10!
 Missing character: There is no Ã in font cmr10!
 Missing character: There is no ª in font cmr10!
-[4] [5] (./endterm.aux) ) 
+[9] (./endterm.aux) ) 
 Here is how much of TeX's memory you used:
- 1372 strings out of 494953
- 17186 string characters out of 6180977
- 80413 words of memory out of 5000000
- 4693 multiletter control sequences out of 15000+600000
- 9537 words of font info for 35 fonts, out of 8000000 for 9000
+ 1691 strings out of 494953
+ 22941 string characters out of 6180977
+ 94335 words of memory out of 5000000
+ 5008 multiletter control sequences out of 15000+600000
+ 9896 words of font info for 36 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 27i,15n,20p,615b,203s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmtt10.pfb>
-Output written on endterm.pdf (5 pages, 167130 bytes).
+ 27i,15n,32p,471b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+bx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmtt10.pfb>
+Output written on endterm.pdf (9 pages, 196570 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
+ 86 PDF objects out of 1000 (max. 8388607)
+ 61 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

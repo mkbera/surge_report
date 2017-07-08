@@ -2,6 +2,7 @@
 \usepackage{amsmath}
 %\usepackage[letterpaper, portrait, margin=0.5in]{geometry}
 %\usepackage[margin=0.5in]{geometry}
+\usepackage{caption}
 
 \usepackage{geometry}
  \geometry{
@@ -15,7 +16,7 @@
 
 
 
-\title{Optimising Robotic Swarm Movement}
+\title{SAT Based Motion Planning of a Multi-Robot System}
 \author{Manish Kumar Bera \\
 Mentor: Dr. Indranil Saha
 }
@@ -26,18 +27,22 @@ Mentor: Dr. Indranil Saha
 	\maketitle
 
 	\section{Introduction}
+		\subsection{Motivation}
 		Swarm robotics is a field of multi-robotics in which large number of robots are coordinated in a centralized$^{[1]}$ or distributed$^{[3]}$ way.
 		It is supposed that a desired collective behavior emerges from the interactions between the robots and interactions of robots with the environment.
 		With  recent  technological  developments, producing a large number of inexpensive robots that are  equipped  with  sophisticated  sensing,  computation and communication tools has become a reality$^{[5]}$. 
 		Swarm robots can be used to form various spatial arrangements for any required purpose.
+		\subsection{Objective}
 		Robots need to move simultaneosly, to go from one position to another, to collectively form a new configuration.
-		Describing  complex  spatial  specifications  for  swarms  is a  non-trivial  task.
+		Describing complex spatial specifications for swarms is a non-trivial task. Our goal is
+		to optimise the cost of the collective motion of the robots from initial configuration
+		to final configuration.
 
 
-	\section{Objective}
-		Describing  complex  spatial  specifications  for  swarms  is a  non-trivial  task.
-		Our goal is to optimise the cost of the collective motion of the robots from initial configuration to final configuration.
 
+
+	\section{Problem Statement}
+		We are give a $n \times n$ grid with $R$ number of robots and $G$ number of obstacles. The initial and final positions of the robots along with the positions of the obstacles are given. Our task is to generate optimal trajectory for all the robots such that it takes minimum time and incurs minimum cost. 
 	\section{Methodology}
 		We consider a grid $A$ of size $n \times n$.
 		We will refer the collection of all the robots in the grid as \textit{swarm}. 
@@ -83,7 +88,7 @@ Mentor: Dr. Indranil Saha
 		%\subsection{boolean variables}
 		The rules for the robots to move have to formulated into boolean expressions. For this we will have to define boolean variables.
 		\subsection{Defining boolean variables:}
-			I define $X(t, k, x, y)$ as a boolean variable s.t. $X(t, k, x, y)$ is \textit{TRUE} iff at time step $t$, the $k$th robot is at position $(x,y)$. the number of boolean variables will be $(L+1) \times R \times n^2$
+			I define $X(t, k, x, y)$ as a boolean variable s.t. $X(t, k, x, y)$ is \textit{TRUE} iff at time step $t$, the $k$th robot is at position $(x,y)$. The number of boolean variables will be $(L+1) \times R \times n^2$
 		
 		\subsection{Constraints for initial and final states:}
 			I define $(x_0^k,y_0^k)$ to be the initial position of the $k$th robot.
@@ -103,7 +108,7 @@ Mentor: Dr. Indranil Saha
 			\end{split}
 			\end{equation*}
 
-			The time complexity for computing the constraints for the initial and final positions will be $O(R \times n^2)$.			
+			The time complexity for forming the constraints for the initial and final positions will be $O(R \times n^2)$.			
 
 		\subsection{Constraints for motion primitives:}
 			I assume that the robots will have five simple motion primitives. each robot can:\\
@@ -122,7 +127,7 @@ Mentor: Dr. Indranil Saha
 				X(t+1, k, x, y) \Rightarrow X(t,k,x,y)\vee X(t,k,x-1,y)\vee X(t,k,x,y-1)\vee X(t,k,x+1,y)\vee X(t,k,x,y+1)
 			$$
 
-			The time complexity for computing the constraints for the motion primitives will be $O(L \times R\times n^2)$.
+			The time complexity for forming the constraints for the motion primitives will be $O(L \times R\times n^2)$.
 
 		\subsection{Constraints for obstacle avoidance:}
 			Let the number of obstacles be $G$. Let $(x_{obs}^g, y_{obs}^g)$ be the position of the $g$th obstacle where $g \in \{0, 1, . . . , G-1\}$. Each robot has to avoid each obstacle at every timestep.\\
@@ -131,7 +136,7 @@ Mentor: Dr. Indranil Saha
 			$$
 				X(t, k, x, y) = FALSE;\ if\ \exists g \in \{0,...,G-1\}\ s.t.\ x=x_{obs}^g\ and\ y=y_{obs}^g
 			$$
-			The time complexity for computing the constraints for obstacle avoidance will be $O(L \times R\times G)$.
+			The time complexity for forming the constraints for obstacle avoidance will be $O(L \times R\times G)$.
 
 		\subsection{Constraints for collision avoidance:}
 			Each robot must avoid getting hit by another robot. There will be two types of collision.
@@ -141,7 +146,7 @@ Mentor: Dr. Indranil Saha
 				$$
 					\neg (X(t, k_1, x, y) \wedge X(t, k_2, x, y))
 				$$
-				The time complexity for computing the constraints for same space collision avoidance will be
+				The time complexity for forming the constraints for same space collision avoidance will be
 				$O(L \times R^2 \times n^2)$.
 			\subsubsection{Constraints for headon collision avoidance}
 				This refers to the collision type where two robots move into each other. The constraints for this type of collision avoidance will be:\\
@@ -152,26 +157,233 @@ Mentor: Dr. Indranil Saha
 				$$
 					\neg((X(t, k_1, x, y) \wedge X(t+1, k_1, x, y+1)) \wedge (X(t, k_2, x, y+1) \wedge X(t+1, k_2, x, y)))
 				$$
-				The time complexity for computing the constraints for headon collision avoidance will be
+				The time complexity for forming the constraints for headon collision avoidance will be
 				$O(L \times R^2 \times n^2)$.
 
-			\subsection{Soft constraints for cost optimization}
-				For the optimisation of cost, we will need some additional constraints. Instead fomulating hard constraints, we formulate soft constraints, such that when the maximum number of those soft constraints are true, we will get the optimum cost.
-				We will formulate each constraint such that it represents the negation of a particular motion.
-				The soft constraints for cost optimization will be:\\
-				$\forall t \in \{0, ..., L-1\};\ \forall k \in \{0, 1, ..., R-1\}\ \forall x_0,y_0 \in \{0,1,...,n-1\};$
-				$$
-					\neg(X(t, k, x_0, y_0) \wedge X(t+1, k, x_1))
-				$$
-
+		\subsection{Soft constraints for cost optimization}
+			For the optimisation of cost, we will need some additional constraints. Instead fomulating hard constraints, we formulate soft constraints, such that when the maximum number of those soft constraints are true, we will get the optimum cost.
+			We will formulate each constraint such that it represents the negation of a particular motion. We assume that if the robot chooses not to move from his position in a time step then it incurs a cost of $0$. But if he moves, in any of the four directions, then it incurs a cost of $1$.
+			The soft constraints for cost optimization will be:\\
+			$\forall t \in \{0, ..., L-1\};\ \forall k \in \{0, 1, ..., R-1\}\ \forall x_0,y_0 \in \{0,...,n-1\};
+			x_1, y_1 \in \{0,...,n-1\}; \ x_1=x_0 \pm 1 \ OR \ y_1=y_0 \pm 1 \ but \ not \ both; $
+			$$
+				\neg(X(t, k, x_0, y_0) \wedge X(t+1, k, x_1, y_1))
+			$$
+			Time complexity for forming these constraints is $O(L \times R \times n^2)$. These constraints are given to Open-WBO, along with the rest of the constraints, while solving for the solution with optimum cost. These constraints are not fed to the MiniSAT while computing the optimum value of \textit{time length}. 
 
 	\section{Implementation}
-		For the implementation we use two SAT solver tools, namely, MiniSAT$^[4]$ and Open-WBO$^[6]$. MiniSat is a minimalistic, open-source SAT solver. Open-WBO is an open source MaxSAT solver initially based on WBO.
-		First we find the optimum \textit{time length} for the problem using MiniSAT
-		For solving the constraints, we transform the constraints into CNF form and feed it as input to the MiniSAT tool. For getting the correct value of $L$, we have to iterate over successive integers, starting from 1. For optimisation, I make exponential jumps, i.e., I iterate over 1, 2, 4, 8, ... . After I get satisfiability, say at $2^a$, I do a binary search between $2^{a-1}$ and $2^a$to get the least value of $L$ for which the problem can be solved. I have also used other optimizaton techniques like reusing the constraints calculated for previous $L$ values, instead of calculating them again.
+		For the implementation we use two SAT solver tools, namely, MiniSAT$^[4]$ and Open-WBO$^[6]$. MiniSat is a minimalistic, open-source SAT solver. Open-WBO is an open source MaxSAT solver initially based on WBO.\\
+		First we find the optimum \textit{time length} for the problem using MiniSAT and then we find Open-WBO to find the optimal cost.
+		First we generate the constraints using C++ executables.
+		Then, we transform the constraints into CNF form and feed it as input to the SAT solver.
+		The output of SAT solver is processed to get the final result.
+		
+		\subsection{Finding the optimal \textit{time length}}
+			Initially we don't know the optimal value of $L$(\textit{time length}) for which the given problem can be solved. But in order to generate the constraints we need to give a specific value of $L$ to the constraint generator.
+
+			\subsubsection{Strategy 1: Linear Jumps}
+			In this strategy we iterate the value of $L$ over $1, 2, 3, ...$, linearly increasing the value, till we get the value of $L$ for which the constraints are satisfiable.\\
+			
+			\subsubsection{Strategy 2: Exponential Jumps with Binary Search}
+			Here, we increase the value of $L$ exponentially($1, 2, 4, 8, ...$) each time and check if the constraints are satisfiable. Say we get satisfiability at $L = 2^a$. But, $2^a$ may not be the minimum value for which the constraints are satisfiable because we did not check the values between $2^{a-1}$ and $2^a$. So, we execute a binary search between $2^{a-1}$ and $2^a$ till we reach the minimum value for which we get satisfiability for the constraints.
+
+			\subsubsection{Strategy 1 v/s Strategy 2}
+			Following are the timings of Strategy 1 v/s Strategy 2 in zigzag workspace($6.2.1$):
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Timing for Strategy 1 & Timing for Strategy 2 \\ [0.5ex] 
+				 \hline\hline
+				 $5 \times 5$ & 3 & 0.10 s & 0.07 s \\ 
+				 $9 \times 9$ & 5 & 2.04 s & 0.77 s \\
+				 $13 \times 13$ & 7 & 30.38 s & 6.21 s \\
+				 $17 \times 17$ & 9 & 3 m 33 s & 33.74 s  \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of Strategy 1 v/s Startegy 2 on zigzag workspace}
+				%\label{table:1}
+				\end{table}
+
+			Following are the timings of Strategy 1 v/s Strategy 2 in straight workspace($6.2.2$):
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Timing for Strategy 1 & Timing for Strategy 2 \\ [0.5ex] 
+				 \hline\hline
+				 $4 \times 4$ & 2 & 0.03 s & 0.04 s \\ 
+				 $8 \times 8$ & 4 & 0.14 s & 0.13 s \\
+				 $12 \times 12$ & 6 & 0.78 s & 0.74 s \\
+				 $16 \times 16$ & 8 & 4.06 s & 2.22 s \\
+				 $20 \times 20$ & 10 & 14.18 s & 6.09 s \\
+				 $24 \times 24$ & 12 & 40.06 s & 21.63 s  \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of SMT based v/s SAT based tool on straight workspace}
+				%\label{table:1}
+				\end{table}
+
+
+		\subsection{Finding the solution with optimum cost}
+			Once we find the minmum value of $L$ for which the constraints are solvable, we need to find the solution with the optimum cost. This is achieved by feeding the Open-WBO MAX-SAT solver with the soft constraints we discussed earlier($4.6$), along with the rest of the constraints. The result thus obtained will be optimised, both in terms of \textit{time length} and cost.
+
+		\subsection{Optimising constraint generation}
+			It must be noticed that while computing the optimal \textit{time length}, in the iterations of $L$ the constraint generation time is substantial as compared to the tool call time. So, in order to improve upon the total time we need to optimise the constraint generation. The idea is to reuse the constraints generated for the smaller values of $L$ in the constraints for the larger values of $L$.\\
+
+			What we do is we store the constraints generated for each value of $L$ ,say upto $t$, in a file. When we generate the constraints for $t+1$, we escape the long iterations of generating the constraints for $L=1$ to $L=t$, and instead just catinate them from the stored files.
+
+			\subsubsection{Optimised constraint generation v/s non-optimised generation}
+			Following are the timings of Optimised constraint generation v/s non-optimised generation in zigzag workspace($6.2.1$):
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Non-optimised generation & Optimised generation \\ [0.5ex] 
+				 \hline\hline
+				 $5 \times 5$ & 3 & 0.07 s & 0.13 s\\ 
+				 $9 \times 9$ & 5  & 0.77 s & 0.44 s\\
+				 $13 \times 13$ & 7  & 6.21 s & 2.55 s\\
+				 $17 \times 17$ & 9  & 33.74 s & 13.24s \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of Strategy 1 v/s Startegy 2 on zigzag workspace}
+				%\label{table:1}
+				\end{table}
+
+			Following are the timings of Optimised constraint generation v/s non-optimised generation in straight workspace($6.2.2$):
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Non-optimised generation & Optimised generation \\ [0.5ex] 
+				 \hline\hline
+				 $4 \times 4$ & 2 & 0.04 s & 0.09 s\\ 
+				 $8 \times 8$ & 4 & 0.13 s & 0.14 s\\
+				 $12 \times 12$ & 6 & 0.74 s & 0.43 s\\
+				 $16 \times 16$ & 8 & 2.22 s & 0.99 s\\
+				 $20 \times 20$ & 10 & 6.09 s & 2.31 s\\
+				 $24 \times 24$ & 12 & 21.63 s & 8.56 s\\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of SMT based v/s SAT based tool on straight workspace}
+				%\label{table:1}
+				\end{table}
+
+
+	\section{Results}
+		In this section we will be discussing the results that we obtain after experimenting. We will be comparing the results with the tool discussed in the paper \textit{Automated composition of motion primitives for multi-robot systems from safe LTL specifications}$^{[7]}$. The paper uses a SMT based tool.
+		\subsection{A brief discussion on the implementation of the SMT based tool}
+		The SMT tool originally accomodated complex motion primitives. We modified the source files so that the tool produces results with the basic motion primitives that we use currently in this paper.\\
+		The tool needs to be given the \textit{time length} and the upper bound of the total cost, along with the workspace, in order to produce output.\\
+		So, first we compute the optimal \textit{time length} using exponential jumps followed by binary search for the value of \textit{time length}. During this computation, we set the cost to be a safe upper bound. For \textit{time length} $L$ and total number of robots $R$, we set the total cost to be $(L+1) \times R$. This is followed by a binary search for cost between $L$ and $(L+1) \times R$.\\
+		The final output of the SMT solver is finally processed to give the result.
+		\subsection{SMT based tool v/s SAT based tool}
+		We will be comparing the timings of the SMT based tool and the SAT based tool for three kinds of workspaces.
+			\subsubsection{Zigzag patterned workpace}
+			In this workspace the obstacles are placed in such a way that the robots have to move in a zigzag path to reach their final positions. In the below grid, $G$ represents an obsacle; $k_i$ and $k_f$ indicates the initial and final positions of the $k$th robot respectively.
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{| c | c | c | c | c |} 
+				 \hline
+				 . & . & $1_f$ & $2_f$ & $3_f$ \\ 
+				 \hline
+				 . & G & G & G & G \\
+				 \hline
+				 . & . & . & . & . \\
+				 \hline
+				 G & G & G & G & . \\
+				 \hline
+				 $1_i$ & $2_i$ & $3_i$ & . & . \\ [1ex] 
+				 \hline
+				\end{tabular}
+				\caption*{FIGURE: An example grid: $5\times 5$; with 3 robots}
+				%\label{table:1}
+				\end{table}
+
+			For the above mentioned type of workspace, following are the timings of the SMT based tool and SAT based tool.
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Timing for SMT based solver & Timing for SAT based solver \\ [0.5ex] 
+				 \hline\hline
+				 $5 \times 5$ & 3 & 10.95 s & 0.29 s \\ 
+				 $9 \times 9$ & 5 & 18 m 16 s & 1.5 s \\
+				 $13 \times 13$ & 7 & 1 hr + & 11.8 s \\
+				 $17 \times 17$ & 9 & - & 1 m 19 s  \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of SMT based v/s SAT based tool on zigzag workspace}
+				%\label{table:1}
+				\end{table}
+
+
+			\subsubsection{Straight patterned workspace}
+			In this workspace the obstacles are placed in such a way that the robots move in a relatively straight paths to reach their destinations, without having to cross the paths of other robots.\\
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{| c | c | c | c | c | c |} 
+				 \hline
+				 $1_f$ & G & $2_f$ & G & $3_f$ & G \\ 
+				 \hline
+				 . & . & . & . & . & . \\
+				 \hline
+				 G & . & G & . & G & . \\
+				 \hline
+				 . & . & . & . & . & . \\
+				 \hline
+				 . & G & . & G & . & G \\
+				 \hline
+				 $1_i$ & . & $2_i$ & . & $3_i$ & . \\ [1ex] 
+				 \hline
+				\end{tabular}
+				\caption*{FIGURE: An example grid: $6\times 6$; with 3 robots}
+				%\label{table:1}
+				\end{table}
+
+
+
+
+			For the above mentioned type of workspace, following are the timings of the SMT based tool and SAT based tool.
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Timing for SMT based solver & Timing for SAT based solver \\ [0.5ex] 
+				 \hline\hline
+				 $4 \times 4$ & 2 & 0.97 s & 0.17 s \\ 
+				 $8 \times 8$ & 4 & 6.25 s & 0.3 s \\
+				 $12 \times 12$ & 6 & 2 m 49 s & 1.5 s \\
+				 $16 \times 16$ & 8 & - & 4.9 s \\
+				 $20 \times 20$ & 10 & - & 12.9 s \\
+				 $24 \times 24$ & 12 & - & 53.54 s  \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of SMT based v/s SAT based tool on straight workspace}
+				%\label{table:1}
+				\end{table}
+
+			\subsubsection{Workspace used in the aforementioned paper$^{[7]}$}
+			This is the workspace used in the paper in $[7]$ to demonstrate the working of the tool. It is a $19 \times 19$ grid with 4 robots and 92 obstacles. The following are the timings for both the tools
+				\begin{table}[h!]
+				\centering
+				\begin{tabular}{|| p{2cm} | p{2cm} | p{2cm} | p{2cm} ||} 
+				 \hline\hline
+				 Grid size$(n \times n)$ & Number of robots$(R)$ & Timing for SMT based solver & Timing for SAT based solver \\ [0.5ex] 
+				 \hline\hline
+				 $19 \times 19$ & 4 & 2 m 13 s & 1.66 s  \\ [1ex]
+				 \hline
+				\end{tabular}
+				\caption*{TABLE: Timings of SMT based v/s SAT based tool on example workspace in $[7]$}
+				%\label{table:1}
+				\end{table}
+
 
 	\section{Further Work}
-		We wish to extend the developed implementation to include more complex motion primitives for smoother trajectories. We also wish to optimise the motion primitive cost using MAX-SAT. We further hope to enhance the compuation speed using techniques like multi-threading, and optimization methods such as pre-computation of constraints.
+		We wish to extend the developed implementation to include more complex motion primitives for smoother trajectories.
+		There are many suggested methods to make the constraint generation more efficient. One of them is multi threading. As the variables in the loops can be made independent of each other, multi-threading seems to be a viable choice for reducing the constraint generation time. 
+		We further hope to enhance the compuation speed using pre-computation of constraints.
 
 	%\section{References}
 		\begin{thebibliography}{9}
@@ -214,6 +426,12 @@ Mentor: Dr. Indranil Saha
 			\author{Ruben Martins, Vasco Manquinho, Inês Lynce.}
 			\textit{Open-WBO: An open source version of the MaxSAT solver WBO}\\
 			\texttt{http://sat.inesc-id.pt/open-wbo/index.html}
+
+			%item [7]
+			\bibitem{isaha-iros}
+			\author{Indranil Saha, Rattanachai Ramaithitima, Vijay Kumar}
+			\textit{Automated composition of motion primitives for multi-robot systems from safe LTL specifications}\\
+			\texttt{http://ieeexplore.ieee.org/document/6942758/}
 		\end{thebibliography}
 
 \end{document}
